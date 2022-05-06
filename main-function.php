@@ -1,3 +1,5 @@
+<?php 
+
 /**
  * Register practice post type
  */
@@ -389,3 +391,5 @@ function elementor_practice_products_shortcode( $atts ) {
 	
 }
 add_shortcode( 'practice_products', 'elementor_practice_products_shortcode');
+
+?>
