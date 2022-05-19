@@ -1,4 +1,15 @@
-<?php 
+<?php
+/*
+Plugin Name:  Dry Eye Rescue
+Plugin URI:   https://www.dryeyerescue.com 
+Description:  This is the plugin that connects to the dry eye rescue API and pulls all the practices. 
+Version:      1.0
+Author:       Oscar Diaz 
+Author URI:   https://www.sobefy.com
+License:      GPL2
+License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+*/
+
 
 /**
  * Register practice post type
@@ -20,9 +31,6 @@ function register_practice_cpt() {
  * Function to interact with drye eye API
  */
 
-if( ! wp_next_scheduled('update_practice_list') ) {
-    wp_schedule_event( time(), 'daily', 'get_practices_from_api' );
-}
 
 add_action('wp_ajax_nopriv_get_practices_from_api', 'get_practices_from_api');
 add_action('wp_ajax_get_practices_from_api', 'get_practices_from_api');
@@ -392,4 +400,24 @@ function elementor_practice_products_shortcode( $atts ) {
 }
 add_shortcode( 'practice_products', 'elementor_practice_products_shortcode');
 
-?>
+
+/* Products Shortcode */
+// Shortcode to output custom PHP in Elementor
+function elementor_practice_doctors_shortcode( $atts ) {
+
+
+	$rows = get_field('field_62752a2c07f80');
+	if($rows)
+	{
+    echo '<ul class="doctors-grid">';
+
+    foreach($rows as $row)
+    {
+        echo '<li class="doctor-card">' . '<img src=" ' . $row['doctor_image'] . ' " alt="Product Image">' . '<h3>' . $row['doctor_name'] . '</h3>' . '</li>';
+    }
+
+    echo '</ul>';
+}
+	
+}
+add_shortcode( 'practice_doctors', 'elementor_practice_doctors_shortcode');
